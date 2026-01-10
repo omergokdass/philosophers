@@ -31,9 +31,7 @@ typedef struct s_info
     t_philo *filo;
 } t_info;
 
-
-
 int	ft_atoi(const char *nptr);
-
+int parse (int ac, char **av);
 
 #endif
