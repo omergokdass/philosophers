@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:29:22 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/22 19:15:14 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/27 22:11:55 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	one_philo(t_philo *philo)
 {
-    pthread_mutex_lock(philo->l_fork);
+	pthread_mutex_lock(philo->l_fork);
 	philo_print(philo, philo->id, "has taken fork");
 	ms_sleep(philo->info->die_time);
 	pthread_mutex_unlock(philo->l_fork);
-    
-    pthread_mutex_lock(philo->info->lock_dead);
-    philo->info->is_dead = 1;
-    pthread_mutex_lock(philo->info->lock_write);
-    printf("%llu %d died\n", get_time()- philo->info->start_time, philo->id);
-    pthread_mutex_unlock(philo->info->lock_write);
-    pthread_mutex_unlock(philo->info->lock_dead);
+	pthread_mutex_lock(philo->info->lock_dead);
+	philo->info->is_dead = 1;
+	pthread_mutex_lock(philo->info->lock_write);
+	printf("%llu %d died\n", get_time() - philo->info->start_time, philo->id);
+	pthread_mutex_unlock(philo->info->lock_write);
+	pthread_mutex_unlock(philo->info->lock_dead);
 }
 
 void	routine(t_philo *philo)
@@ -32,15 +31,18 @@ void	routine(t_philo *philo)
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->l_fork);
+		philo_print(philo, philo->id, "has taken fork");
 		pthread_mutex_lock(philo->r_fork);
+		philo_print(philo, philo->id, "has taken fork");
+		
 	}
 	else
 	{
-		pthread_mutex_lock(philo->r_fork);
 		pthread_mutex_lock(philo->l_fork);
+		philo_print(philo, philo->id, "has taken fork");
+		pthread_mutex_lock(philo->r_fork);
+		philo_print(philo, philo->id, "has taken fork");
 	}
-	philo_print(philo, philo->id, "has taken fork");
-	philo_print(philo, philo->id, "has taken fork");
 	philo_print(philo, philo->id, "is eating");
 	pthread_mutex_lock(&philo->lock_meal);
 	philo->eat_count++;
@@ -61,9 +63,9 @@ void	*to_do(void *thread)
 	philo = (t_philo *)thread;
 	if (philo->info->number_philos == 1)
 	{
-        one_philo(philo);
-        return NULL;
-    }
+		one_philo(philo);
+		return (NULL);
+	}
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	while (1)
@@ -80,6 +82,7 @@ void	*to_do(void *thread)
 	}
 	return (NULL);
 }
+
 void	create_thread(t_info *inf)
 {
 	int	i;

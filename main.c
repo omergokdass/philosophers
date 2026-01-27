@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:52:34 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/22 19:50:02 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/27 21:23:32 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	is_hungry(t_info *inf, int i)
 	pthread_mutex_unlock(&inf->filo[i].lock_meal);
 	return (0);
 }
+
 void	*is_dead(void *av)
 {
 	t_info	*inf;
@@ -44,7 +45,10 @@ void	*is_dead(void *av)
 		while (i < inf->number_philos)
 		{
 			if (inf->is_dead != 0)
+			{
+
 				return (NULL);
+			}
 			if (is_hungry(inf, i))
 				return (NULL);
 			i++;
@@ -52,20 +56,19 @@ void	*is_dead(void *av)
 	}
 	return (NULL);
 }
-int must_eat_checking(t_info *inf, int count)
-{
 
+int	must_eat_checking(t_info *inf, int count)
+{
 	if (count == inf->number_philos)
 	{
-
 		pthread_mutex_lock(inf->lock_dead);
 		inf->is_dead = 2;
 		pthread_mutex_unlock(inf->lock_dead);
-
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }
+
 void	*must_eat(void *av)
 {
 	t_info	*inf;
@@ -83,19 +86,16 @@ void	*must_eat(void *av)
 		{
 			pthread_mutex_lock(&inf->filo[i].lock_meal);
 			if (inf->filo[i].eat_count >= inf->must_eat)
-			{
 				count++;
-			}
 			pthread_mutex_unlock(&inf->filo[i].lock_meal);
 			i++;
 		}
-			pthread_mutex_lock(&inf->filo[i].lock_meal);
-
-		if(must_eat_checking(inf,count))
-			return NULL;
-		
+		pthread_mutex_unlock(&inf->filo[i].lock_meal);
+		if (must_eat_checking(inf, count))
+			return (NULL);
 	}
 }
+
 int	main(int ac, char **av)
 {
 	t_info	*inf;
@@ -111,8 +111,8 @@ int	main(int ac, char **av)
 		pthread_join(inf->philos[i++], NULL);
 	pthread_join(inf->monitor_thread, NULL);
 	pthread_join(inf->eat_thread, NULL);
+
 	if (inf->is_dead)
 		return (0);
 	return (0);
-}
-
+} 
