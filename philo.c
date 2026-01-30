@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:29:22 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/30 19:11:37 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 19:34:21 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	init(t_info *inf, char **av)
 	inf->die_time = ft_atoi(av[2]);
 	inf->eating_time = ft_atoi(av[3]);
 	inf->time_sleep = ft_atoi(av[4]);
-	inf->count = 0;
 	if (av[5])
 		inf->must_eat = ft_atoi(av[5]);
 	else

@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:55:55 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/30 16:07:16 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 19:34:24 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_info
 	int				time_sleep;
 	int				is_dead;
 	int				must_eat;
-	int				count;
 	long long		start_time;
 	pthread_t		*philos;
 	pthread_t		monitor_thread;

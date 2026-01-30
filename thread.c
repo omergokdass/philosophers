@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:02:24 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/30 16:24:10 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 19:30:29 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	*is_dead(void *av)
 		i = 0;
 		while (i < inf->number_philos)
 		{
+			if (is_hungry(inf, i))
+				return (NULL);
 			pthread_mutex_lock(inf->lock_dead);
 			if (inf->is_dead != 0)
 			{
@@ -51,8 +53,6 @@ void	*is_dead(void *av)
 				return (NULL);
 			}
 			pthread_mutex_unlock(inf->lock_dead);
-			if (is_hungry(inf, i))
-				return (NULL);
 			i++;
 		}
 		usleep(1000);
