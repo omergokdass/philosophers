@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:29:22 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/27 22:11:55 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 19:11:37 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,10 @@ void	one_philo(t_philo *philo)
 
 void	routine(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->l_fork);
-		philo_print(philo, philo->id, "has taken fork");
-		pthread_mutex_lock(philo->r_fork);
-		philo_print(philo, philo->id, "has taken fork");
-		
-	}
-	else
-	{
-		pthread_mutex_lock(philo->l_fork);
-		philo_print(philo, philo->id, "has taken fork");
-		pthread_mutex_lock(philo->r_fork);
-		philo_print(philo, philo->id, "has taken fork");
-	}
+	pthread_mutex_lock(philo->l_fork);
+	philo_print(philo, philo->id, "has taken fork");
+	pthread_mutex_lock(philo->r_fork);
+	philo_print(philo, philo->id, "has taken fork");
 	philo_print(philo, philo->id, "is eating");
 	pthread_mutex_lock(&philo->lock_meal);
 	philo->eat_count++;
@@ -88,20 +77,20 @@ void	create_thread(t_info *inf)
 	int	i;
 
 	i = 0;
-	inf->filo = malloc(sizeof(t_philo) * inf->number_philos);
+	inf->phi = malloc(sizeof(t_philo) * inf->number_philos);
 	inf->philos = malloc(sizeof(pthread_t) * inf->number_philos);
 	while (i < inf->number_philos)
 	{
-		inf->filo[i].id = i + 1;
-		inf->filo[i].l_fork = &inf->forks[i];
-		inf->filo[i].r_fork = &inf->forks[(i + 1)
+		inf->phi[i].id = i + 1;
+		inf->phi[i].l_fork = &inf->forks[i];
+		inf->phi[i].r_fork = &inf->forks[(i + 1)
 			% inf->number_philos];
-		inf->filo[i].eat_count = 0;
-		inf->filo[i].info = inf;
-		pthread_mutex_init(&inf->filo[i].lock_meal, NULL);
-		inf->filo[i].last_meal_time = inf->start_time;
+		inf->phi[i].eat_count = 0;
+		inf->phi[i].info = inf;
+		pthread_mutex_init(&inf->phi[i].lock_meal, NULL);
+		inf->phi[i].last_meal_time = inf->start_time;
 		pthread_create(&inf->philos[i], NULL,
-			to_do, &inf->filo[i]);
+			to_do, &inf->phi[i]);
 		i++;
 	}
 	pthread_create(&inf->monitor_thread, NULL, is_dead, inf);

@@ -2,7 +2,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = philo.c utils.c main.c 
+SRCS = philo.c utils.c main.c thread.c
 OBJS = $(SRCS:.c=.o)
 HEADER = philo.h
 

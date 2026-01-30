@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 16:29:31 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/22 17:24:14 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 15:55:54 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ long long	get_time(void)
 
 void	ms_sleep(int time)
 {
-	long long	dest_time;
+	long long	dest;
 
-	dest_time = get_time() + time;
-	while (get_time() < dest_time)
+	dest = get_time() + time;
+	while (get_time() < dest)
 		usleep(100);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ogokdas <ogokdas@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:55:55 by ogokdas           #+#    #+#             */
-/*   Updated: 2026/01/22 18:34:10 by ogokdas          ###   ########.fr       */
+/*   Updated: 2026/01/30 16:07:16 by ogokdas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_info
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*lock_write;
 	pthread_mutex_t	*lock_dead;
-	t_philo			*filo;
+	t_philo			*phi;
 }	t_info;
 
 int			ft_atoi(const char *nptr);
